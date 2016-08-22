@@ -56,6 +56,10 @@ if (process.env.TOKEN || process.env.SLACK_TOKEN) {
     process.exit(1);
 }
 
+var apiai = require('botkit-middleware-apiai')({
+       token: process.env.APIAI_TOKEN
+});
+controller.middleware.receive.use(apiai.receive);
 
 /**
  * A demonstration for how to handle websocket events. In this case, just log when we have and have not
