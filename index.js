@@ -89,10 +89,18 @@ controller.on('bot_channel_join', function (bot, message) {
     bot.reply(message, "I'm here!")
 });
 
-controller.hears('hello', 'direct_message', function (bot, message) {
-    bot.reply(message, 'Hello!');
+controller.hears(['hello'], 'direct_message', apiai.hears, function (
+            bot, message) {
+       bot.reply(message, 'Hello!');
 });
 
+controller.hears(['flights'], 'direct_message', apiai.hears, function (bot, message) {
+       if(message.fulfillment.speech !== '') {
+                  bot.reply(message, message.fulfillment.speech);
+                     } else {
+                                bot.reply(message, "You requested to fly to " + message.entities['geo-city'] + " on " + message.entities['date']+".");
+                                   }
+});
 
 /**
  * AN example of what could be:
